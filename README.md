@@ -9,5 +9,5 @@ we'll see what works best
 
 
 
-on second thought, lets try and grok elixir forst, before hopping off to 27 new languages
+on second thought, lets try and grok elixir first, before hopping off to 27 new languages
 
