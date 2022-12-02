@@ -54,8 +54,7 @@ defmodule Day2 do
       str
       |> String.graphemes
     
-    game = {them, me}
-    case game do
+    case {them, me} do
       {"A", "X"} -> 4
       {"A", "Y"} -> 8
       {"A", "Z"} -> 3
