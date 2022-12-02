@@ -2,7 +2,12 @@ defmodule HelperTest do
   use ExUnit.Case
   doctest Helper
 
-  test "greets the world" do
-    assert Helper.hello() == :world
+  test "read_input" do
+    assert Helper.read_input() == "a\nb\nc\n"
   end
+
+  test "read_lines" do
+    assert Helper.read_lines() == ["a", "b", "c", ""]
+  end
+
 end

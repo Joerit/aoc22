@@ -3,11 +3,19 @@ defmodule Helper do
   Some helper functions for aoc
   """
   def read_lines() do
-    read_input()
-    |> String.split("\n")
+    read_input("./input")
+    |> String.split("\n", trim: true)
   end
 
-  def read_input() do
-    File.read!("./input")
+  def read_test() do
+    read_input("./testinput")
+    |> String.split("\n", trim: true)
   end
+
+  def read_input(file \\ "./input") do
+    File.read!(file)
+  end
+
+
+
 end
