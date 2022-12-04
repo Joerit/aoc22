@@ -42,15 +42,12 @@ defmodule Day4 do
     |> Enum.map(&parse_range/1)
   end
 
-  def check_overlap([elf1, elf2]) 
-      when (elf1.start <= elf2.start) and (elf1.stop >= elf2.stop)
-      when (elf1.start >= elf2.start) and (elf1.stop <= elf2.stop) do
-    1
+  def check_overlap([elf1, elf2]) do
+    if (Range.disjoint?(elf1.start..elf1.stop, elf2.start..elf2.stop)) do
+      0
+    else
+      1
+    end
   end
-
-  def check_overlap(_) do
-    0
-  end
-
 end
 
