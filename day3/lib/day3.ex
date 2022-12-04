@@ -23,56 +23,29 @@ defmodule Day3 do
   def start(_, _) do
 
     read_test()
-    |> day3p1()
+    |> day3()
 
     read_lines()
-    |> day3p1()
-
-    #read_test()
-    #|> day3p2()
-
-    #read_lines()
-    #|> day3p2()
+    |> day3()
   end
 
-  def day3p1(input) do
+  def day3(input) do
     input
     |> IO.inspect
-    |> to_prios
+    |> Stream.map(&to_charlist/1)
+    |> Stream.chunk_every(3)
+    |> IO.inspect
+    |> Stream.map(&sacks_to_duplicates/1)
     |> Enum.sum
     |> inspect
     |> IO.puts
 
   end
 
-  @doc """
-  convert list of strings to list of priority
-  """
-  def to_prios(list) do
-    list 
-    |> Stream.map(&sack_to_prio/1)
-  end
-
-  def sack_to_prio(sack) do
-    IO.inspect(sack)
-      
-    sack
-    |> String.trim
-    |> sack_to_compartments
-    |> IO.inspect
-    |> compartments_to_duplicates
-  end
-
-  def sack_to_compartments(sack) do
-    len = String.length(sack)
-
-    [to_charlist(slice(sack, 0..div(len, 2)-1)), to_charlist(slice(sack, div(len, 2)..-1))]
-  end
-
-
-  def compartments_to_duplicates([comp1, comp2]) do
+  def sacks_to_duplicates([comp1, comp2, comp3]) do
     comp1
-    |> Enum.find(fn(item) -> Enum.member?(comp2, item) end)   
+    |> Enum.filter(fn(item) -> Enum.member?(comp2, item) end)   
+    |> Enum.find(fn(item) -> Enum.member?(comp3, item) end)   
     |> to_prio_value
     |> IO.inspect
   end
