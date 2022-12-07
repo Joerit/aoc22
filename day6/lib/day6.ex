@@ -10,15 +10,15 @@ defmodule Day6 do
   end
 
   def pt1(input) do
-    day6(input)
+    day6(input, 4)
   end
   def pt2(input) do
-    IO.puts("tbd")
+    day6(input, 14)
   end
 
-  def day6(input) do
+  def day6(input, len) do
     init = input |> String.at(0)
-    initacc = {[init, init, init, init], 1}
+    initacc = {List.duplicate(init, len), 1}
     input
     |> String.graphemes
     |> Enum.reduce(initacc, &traverse_to_find/2)
