@@ -9,29 +9,38 @@ defmodule Day7 do
   require Stream
   require Enum
 
+  @total_size 70000000
+  @required_size 30000000
+  # 70M - 30M
+  @max_size 40000000
+
   def start(_, _) do
     run(&pt1/1, &pt2/1)
   end
 
   def pt1(input) do
-    input |> day7 
+    input 
+    |> parse_to_dir_tree
+    |> sum_small_dirs
+    |> IO.inspect
   end
   def pt2(input) do
-    "wip" |> IO.puts 
+    dir = input
+          |> parse_to_dir_tree
+    
+    dir
+    |> find_smallest_larger_than(dir.size - @max_size)
+    |> IO.inspect
   end
 
-  def day7(input) do
+  def parse_to_dir_tree(input) do
     input
     |> String.trim
     |> String.split("\n")
     |> remove_ls_dir
-    |> IO.inspect
     |> to_dir
-    |> IO.inspect
     |> elem(0)
-    |> IO.inspect
-    |> Enum.map(&sum_small_dirs/1)
-    |> IO.inspect
+    |> List.first
   end
 
   def remove_ls_dir(lines) do
@@ -118,6 +127,17 @@ defmodule Day7 do
       subsize + dir.size
     else 
       subsize 
+    end
+  end
+  def find_smallest_larger_than(dir, size) do
+    min_sub = dir.dirs 
+              |> Enum.map(fn d -> find_smallest_larger_than(d, size) end)
+              |> Enum.min(fn -> @total_size end)
+    
+    if dir.size > size do
+      min(dir.size, min_sub)
+    else 
+      min_sub
     end
   end
 end
